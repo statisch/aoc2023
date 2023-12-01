@@ -3,6 +3,15 @@
 #include <algorithm>
 #include <string>
 #include <unordered_map>
+#include <string_view>
+
+int util(std::string_view sv) {
+    auto is_digit = [](int c) { return std::isdigit(c); };
+    auto first = std::find_if(sv.begin(), sv.end(), is_digit);
+    auto last = std::find_if(sv.rbegin(), sv.rend(), is_digit);
+    std::string a = std::to_string((*first - 48)) + std::to_string((*last - 48));
+    return std::stoi(a);
+}
 
 int main() {
     std::size_t sum = 0;
@@ -10,7 +19,6 @@ int main() {
                                                     {"six", 6}, {"seven", 7}, {"eight", 8}, {"nine", 9}};
     std::ifstream stream("input.txt");
     std::string text;
-    auto is_digit = [](int c) { return std::isdigit(c); };
     while (std::getline(stream, text)) {
         std::string temp;
         for (const auto& [key, val] : vals) {
@@ -20,15 +28,9 @@ int main() {
             }
         }
         if (!temp.empty()) {
-            auto first = std::find_if(temp.begin(), temp.end(), is_digit);
-            auto last = std::find_if(temp.rbegin(), temp.rend(), is_digit);
-            std::string a = std::to_string((*first - 48)) + std::to_string((*last - 48));
-            sum += std::stoi(a);
+            sum += util(temp);
         } else {
-            auto first = std::find_if(text.begin(), text.end(), is_digit);
-            auto last = std::find_if(text.rbegin(), text.rend(), is_digit);
-            std::string a = std::to_string((*first - 48)) + std::to_string((*last - 48));
-            sum += std::stoi(a);
+            sum += util(text);
         }
     }
 
