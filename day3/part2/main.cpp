@@ -19,7 +19,7 @@ int main() {
         for (size_t j = 0; j < vec[i].size(); ++j) {
             if (vec[i][j] == '*') {
                 int counter = 0;
-                int val1{0}, val2{0};
+                int val1{}, val2{};
                 for (int m = -1; m < 2; ++m) {
                     for (int k = -1; k < 2; ++k) {
                         if (isdigit(vec[i + m][j + k])) {
